@@ -10,7 +10,9 @@ export class DeducibleDomainService {
     this.deducibleRepository = deducibleRepository;
   }
 
-  async getFromText(deducibleText: string): Promise<Deducible> {
-    return this.deducibleRepository.getFromText(deducibleText);
+  async getFromText(deducibleText: string): Promise<Array<Deducible>> {
+    let deducible = Deducible.getFromText(deducibleText);
+    console.log('deducible:', deducible);
+    return Promise.resolve(deducible);
   }
 }

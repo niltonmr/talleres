@@ -6,9 +6,9 @@ import { Deducible } from '../domain/entity/deducible.entity';
 export class DeducibleRepositoryImpl implements DeducibleInterfaceRepository {
   private readonly deducibles: Map<string, Deducible> = new Map();
 
-  getFromText(deducibleText: string): Promise<Deducible> {
+  async getFromText(deducibleText: string): Promise<Deducible> {
     let deducible = new Deducible();
-    deducible.valor = true;
+    deducible.deducible = 10;
 
     return Promise.resolve(deducible);
   }

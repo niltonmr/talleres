@@ -6,7 +6,7 @@ import { Deducible } from '../domain/entity/deducible.entity';
 export class GetDeducibleUseCase {
   constructor(private readonly deducibleDomainService: DeducibleDomainService) {}
 
-  async execute(deducibleText: string): Promise<Deducible> {
+  async execute(deducibleText: string): Promise<Array<Deducible>> {
     // Business logic
     return await this.deducibleDomainService.getFromText(deducibleText);
   }
