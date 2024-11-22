@@ -8,6 +8,7 @@ import { DeducibleRepositoryImpl } from '../../src/deducible/infrastructure/dedu
 let deducibleController: DeducibleController;
 let getDeducibleUseCase: GetDeducibleUseCase;
 let deducibleText: string;
+let response: any;
 
 const feature = loadFeature('./getDeducible.feature', {
   loadRelativePath: true,
@@ -17,28 +18,24 @@ const feature = loadFeature('./getDeducible.feature', {
 defineFeature(feature, test => {
   test('ES001 Get deducible from text', ({ given, when, then }) => {
     let request: any;
-    let response: any;
 
-    given(/^a deducible text (.*)$/, (deducibleText: string) => {
+    given('a deducible text', (text: string) => {
+      deducibleText = text;
       const query = {};
       const path = {};
-      const body = { deducibleText };
-      const payload = {};
+      const body = { payload: { text: deducibleText } };
       const headers = {};
       request = {
         body,
         query,
         path,
-        payload,
         headers
       };
     });
 
     when('I request to get the deducible', async () => {
-      let controllers = [DeducibleController];
-      let providers = [];
-
-      providers = [
+      const controllers = [DeducibleController];
+      const providers = [
         DeducibleDomainService,
         GetDeducibleUseCase,
         {
@@ -55,13 +52,16 @@ defineFeature(feature, test => {
       deducibleController = module.get<DeducibleController>(DeducibleController);
       getDeducibleUseCase = module.get<GetDeducibleUseCase>(GetDeducibleUseCase);
 
-      response = await deducibleController.getDeducible(request);
+      response = await deducibleController.getDeducible(request.body);
 
-      console.log('response', JSON.stringify({ response }, null, 2));
+      console.log('response', JSON.stringify(response, null, 2));
     });
 
-    then(/^the deducible should be processed$/, () => {
-      expect(response).toHaveProperty('_valor');
+    then('the response should contain the following deducibles', (expectedResponse: string) => {
+      const expectedDeducibles = JSON.parse(expectedResponse);
+      const actualDeducibles = response;
+
+      expect(actualDeducibles).toEqual(expectedDeducibles);
     });
   });
 });
