@@ -1,5 +1,5 @@
 export class Deducible {
-  esParaTalleres: string;
+  esParaTalleres?: string;
   deducible: number;
   copago: number;
   moneda: string;

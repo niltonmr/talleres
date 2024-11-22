@@ -11,6 +11,12 @@ export class DeducibleDomainService {
   }
 
   async getFromText(deducibleText: string): Promise<Array<Deducible>> {
-    return Deducible.getFromText(deducibleText);
+    const deducibles = await Deducible.getFromText(deducibleText);
+    await Promise.all(
+      deducibles.map(async deducible => {
+        delete deducible.esParaTalleres;
+      })
+    );
+    return deducibles;
   }
 }
