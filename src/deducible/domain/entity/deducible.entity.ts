@@ -31,17 +31,6 @@ export class Deducible {
     console.log(''.padEnd(50, '='));
     console.log(deducibles);
 
-    for (let i = 0; i < deducibles.length; i++) {
-      if (deducibles[i].esParaTalleres === 'DUDA') {
-        if (i === 0) {
-          deducibles[i].esParaTalleres = 'NO';
-        } else {
-          deducibles[i].esParaTalleres = deducibles[i - 1].esParaTalleres;
-        }
-      }
-    }
-    console.log(''.padEnd(50, '='));
-    console.log(deducibles);
     const uniqueDeducibles = Array.from(
       new Set(deducibles.filter(d => d.esParaTalleres === 'SI' && d.deducible > 0).map(d => JSON.stringify(d)))
     ).map(str => JSON.parse(str));
@@ -49,7 +38,7 @@ export class Deducible {
 
     console.log(uniqueDeducibles);
 
-    return Promise.resolve(uniqueDeducibles);
+    return uniqueDeducibles;
   }
   static _dividirTextoEnLineas(text: string): string[] {
     return text.split('\n');
@@ -62,7 +51,7 @@ export class Deducible {
 
     deducible = new Deducible();
 
-    deducible.esParaTalleres = esParaTalleres;
+    deducible.esParaTalleres = (esParaTalleres === 'DUDA' ? contexto.esParaTalleres : esParaTalleres).toUpperCase();
     deducible.deducible = this._obtenerPorcentaje(text);
     deducible.copago = this._obtenerCopago(text);
     deducible.moneda = !!moneda ? moneda : contexto.moneda;

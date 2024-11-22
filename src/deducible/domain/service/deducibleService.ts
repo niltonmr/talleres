@@ -11,8 +11,6 @@ export class DeducibleDomainService {
   }
 
   async getFromText(deducibleText: string): Promise<Array<Deducible>> {
-    let deducible = Deducible.getFromText(deducibleText);
-    console.log('deducible:', deducible);
-    return Promise.resolve(deducible);
+    return Deducible.getFromText(deducibleText);
   }
 }

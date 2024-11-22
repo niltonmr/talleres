@@ -1,14 +1,7 @@
 import { Controller, Post, Body, HttpCode, HttpStatus, InternalServerErrorException } from '@nestjs/common';
 import { GetDeducibleUseCase } from '../application/getDeducible.usecase';
 import { Deducible } from '../domain/entity/deducible.entity';
-
-interface GetDeducibleRequest {
-  payload: {
-    text: string;
-  };
-  query: object;
-  path: object;
-}
+import { GetDeducibleRequest } from '../dto/getDeducibleRequest.dto';
 
 @Controller('deducible')
 export class DeducibleController {
